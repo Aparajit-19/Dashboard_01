@@ -1,4 +1,5 @@
 .container {
+  width: 100%;
   background-color: #043463;
   border-radius: 1em;
   color: white;
@@ -10,6 +11,7 @@
   gap: 1em;
   padding: 1em;
   background-color: rgba(255, 255, 255, 0.089);
+ 
 }
 
 .title {

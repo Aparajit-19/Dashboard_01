@@ -1,17 +1,11 @@
-
-import { useState } from "react";
-
-// Data
+/* eslint-disable */
+import {useState } from "react";
 import mockData from "../assets/data.json";
 import timestamps from "../assets/timeStamps.json";
-
-// Components
 import Dropdown from "../component/dropdown/Dropdown";
 import HeaderTitle from "../component/header-title/HeaderTitle";
 import Search from "../component/search/Search";
 import List from "../component/list/List";
-
-// Styles
 import styles from "./Dashboard.module.css";
 import Card from "../component/card/Card";
 
@@ -20,8 +14,8 @@ const Dashboard = () => {
   const [searchText, setSearchText] = useState("");
   const [selectedOrderDetails, setSelectedOrderDetails] = useState({});
   const [selectedOrderTimeStamps, setSelectedOrderTimeStamps] = useState({});
+  const [showCard ,setShowCard] =useState(false)
 
-  // Merge timestamps data with mockData based on the order ID
   const mergedData = mockData.results.map((order) => {
     const id = order["&id"];
     const matchingTimeStamp = timestamps.results.find(
@@ -33,12 +27,23 @@ const Dashboard = () => {
     };
   });
 
-  // Filter orders based on search text
   const filteredData = mergedData.filter((order) =>
     order["&id"].toLowerCase().includes(searchText.toLowerCase())
   );
 
+  const  updateSelectedData =(data,index )=>{
+    const rd = {
+      ...data.executionDetails
+    }
+    setSelectedOrderDetails({
+...rd
+    })
 
+    const td ={...timestamps.results[index].timestamps}
+    console.log(" td : ",td);
+    setSelectedOrderTimeStamps({...td})
+  }
+ 
   return (
     <div>
       <div className={styles.header}>
@@ -56,7 +61,7 @@ const Dashboard = () => {
         </div>
       </div>
       <div className={styles.content}>
-        <div className={styles.section}>
+        <div  className={styles.section}>
           <Card
             cardData={selectedOrderDetails}
             title="Selected Order Details"
@@ -66,8 +71,7 @@ const Dashboard = () => {
             title="Selected Order Timestamps"
           />
         </div>
-        {/* Use filteredData instead of mergedData */}
-        <List rows={filteredData} selectedCurrency={currency} />
+        <List  updateSelectedData={updateSelectedData}  rows={filteredData} selectedCurrency={currency} />
       </div>
     </div>
   );

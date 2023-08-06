@@ -6,3 +6,13 @@
 .cell:hover {
   background-color: #ddddddaf;
 }
+
+tr {
+  background-color: #dddddd57;
+  cursor: pointer;
+}
+
+tr:hover {
+  background-color: lightslategray;
+  cursor: pointer;
+}
